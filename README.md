@@ -13,6 +13,10 @@ After installing the package from npm registry import it into your react project
 ```js
 import React, { Component} from "react";
 import { SuspendUI } from "suspendui";
+import APIReq from "./../modules/request/JQRequest";
+import Header from "./header/Header";
+import Content from "./content/Content";
+import Views from "./Views/Views";
 
 
 export default class Dashboard extends Component {
@@ -51,5 +55,11 @@ export default class Dashboard extends Component {
     );
  }
 }
+
+
+#API Docs
+The loader, errorfallback and fetch explained
+
+##loader: `function`
   
 
