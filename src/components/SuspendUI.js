@@ -2,7 +2,7 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 
 /**
- * Suspend ui and fetch resources from api server.
+ * SuspendUI and fetch resources from api server.
  *
  * @template SuspendUI
  */
