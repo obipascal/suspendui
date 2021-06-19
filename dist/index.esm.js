@@ -104,6 +104,8 @@ function _createSuper(Derived) {
 
 /**
  * Suspend ui and fetch resources from api server.
+ *
+ * @template SuspendUI
  */
 
 var SuspendUI = /*#__PURE__*/function (_Component) {
@@ -132,6 +134,7 @@ var SuspendUI = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      /** @type {Function} */
       var fetch = this.props.fetch,
           isFunc;
       isFunc = typeof fetch === "function";
@@ -196,15 +199,14 @@ var SuspendUI = /*#__PURE__*/function (_Component) {
 
 
 SuspendUI.propTypes = {
-  /** The loader returns a valid react jsx element  */
+  /** @type {Function} */
   loader: PropTypes.func,
 
-  /** error fallback return a avalid jsx element  */
+  /** @type {Function}  */
   errorfallback: PropTypes.func,
 
-  /** The ajax initiator for fetching resources
-   * ____
-   * This function should return a request promise.
+  /**
+   * @type {Function}
    */
   fetch: PropTypes.func
 };
