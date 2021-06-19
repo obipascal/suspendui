@@ -18,7 +18,6 @@ class SuspendUI extends Component {
   }
 
   componentDidMount() {
-    /** @type {Function} */
     var fetch = this.props.fetch,
       isFunc;
 
