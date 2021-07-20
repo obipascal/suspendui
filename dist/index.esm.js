@@ -103,7 +103,7 @@ function _createSuper(Derived) {
 }
 
 /**
- * Suspend ui and fetch resources from api server.
+ * SuspendUI and fetch resources from api server.
  *
  * @template SuspendUI
  */
@@ -134,7 +134,6 @@ var SuspendUI = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      /** @type {Function} */
       var fetch = this.props.fetch,
           isFunc;
       isFunc = typeof fetch === "function";

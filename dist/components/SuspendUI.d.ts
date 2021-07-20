@@ -1,5 +1,5 @@
 /**
- * Suspend ui and fetch resources from api server.
+ * SuspendUI and fetch resources from api server.
  *
  * @template SuspendUI
  */
