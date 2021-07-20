@@ -1,6 +1,12 @@
 {
 	"name": "suspendui",
-	"version": "0.1.5",
+	"version": "0.1.6",
+	"main": "./dist/index.cjs.js",
+	"module": "./dist/index.esm.js",
+	"source": "./src/index.js",
+	"files": [
+		"./dist"
+	],
 	"types": "./dist/index.d.ts",
 	"repository": "https://github.com/obipascal/suspendui.git",
 	"dependencies": {
