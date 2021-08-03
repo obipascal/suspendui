@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { useState, Component } from 'react';
 import PropTypes from 'prop-types';
 
 function _classCallCheck(instance, Constructor) {
@@ -102,6 +102,128 @@ function _createSuper(Derived) {
   };
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+/**
+ * A function component version of SuspendUI with more improve functionality.
+ */
+
+function Suspense(_ref) {
+  var children = _ref.children,
+      _ref$Loader = _ref.Loader,
+      Loader = _ref$Loader === void 0 ? /*#__PURE__*/React.createElement("span", null, "Loading...") : _ref$Loader,
+      _ref$Fallbackui = _ref.Fallbackui,
+      Fallbackui = _ref$Fallbackui === void 0 ? /*#__PURE__*/React.createElement("span", null, "Something went wrong") : _ref$Fallbackui,
+      _ref$fetch = _ref.fetch,
+      fetch = _ref$fetch === void 0 ? function () {} : _ref$fetch,
+      _ref$autoRefetch = _ref.autoRefetch,
+      autoRefetch = _ref$autoRefetch === void 0 ? false : _ref$autoRefetch,
+      _ref$delay = _ref.delay,
+      delay = _ref$delay === void 0 ? 30000 : _ref$delay;
+
+  var _useState = useState(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      suspend = _useState2[0],
+      setSuspend = _useState2[1];
+
+  var _useState3 = useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      hasError = _useState4[0],
+      setHasError = _useState4[1];
+
+  var cleanUp = function cleanUp() {
+    if (autoRefetch) {
+      var interValid = setInterval(function () {
+        setSuspend(true);
+        setHasError(false);
+      }, delay);
+      return interValid;
+    }
+
+    return null;
+  };
+
+  useEffect(function () {
+    // initally call the fetch if the suspend is true
+    if (suspend) {
+      // determin if the fetch methon contains
+      // a promise chaining of then and catch
+      if (typeof fetch === "function") {
+        fetch().then(function (res) {
+          return setSuspend(false);
+        }).catch(function (error) {
+          return setHasError(true);
+        });
+      }
+    }
+
+    var timerId = cleanUp();
+    return function () {
+      if (timerId !== null) {
+        window.clearInterval(timerId);
+      }
+    };
+  }, [suspend, hasError]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, suspend === true && hasError === false ? Loader : "", hasError === true && suspend === false ? Fallbackui : "", suspend === false && hasError == false ? children : "");
+}
+
 /**
  * SuspendUI and fetch resources from api server.
  *
@@ -159,19 +281,19 @@ var SuspendUI = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       /* 
-        When the component is initally mounted it display 
-        the loader while fetch resources from api server.
-        But as soon as the resources are fetch and the server return 
-        good response the ctrl is passed to the third if statement.
-      */
+          When the component is initally mounted it display 
+          the loader while fetch resources from api server.
+          But as soon as the resources are fetch and the server return 
+          good response the ctrl is passed to the third if statement.
+        */
       if (this.state.suspendui) {
         return this.props.loader();
       }
       /* 
-        When the hasError occourd it means that the api server 
-        return or the request lib return a promise that was rejected.
-        The error fallback component is render to the user.
-      */
+          When the hasError occourd it means that the api server 
+          return or the request lib return a promise that was rejected.
+          The error fallback component is render to the user.
+        */
 
 
       if (this.state.hasError) {
@@ -210,4 +332,9 @@ SuspendUI.propTypes = {
   fetch: PropTypes.func
 };
 
-export { SuspendUI };
+var index = {
+  SuspendUI: SuspendUI,
+  Suspense: Suspense
+};
+
+export default index;

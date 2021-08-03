@@ -1,1 +1,4 @@
-export { SuspendUI } from "./components/SuspendUI";
+import { Suspense } from "./components/Suspense"
+import { SuspendUI } from "./components/SuspendUI"
+
+export default { SuspendUI, Suspense }
